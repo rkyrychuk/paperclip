@@ -17,6 +17,7 @@ module Paperclip
       if definition.is_a? Hash
         @geometry = definition.delete(:geometry)
         @format = definition.delete(:format)
+        @sub_format = definition.delete(:sub_format)
         @processors = definition.delete(:processors)
         @convert_options = definition.delete(:convert_options)
         @source_file_options = definition.delete(:source_file_options)
@@ -24,12 +25,14 @@ module Paperclip
       elsif definition.is_a? String
         @geometry = definition
         @format = nil
+        @sub_format = nil
         @other_args = {}
       else
-        @geometry, @format = [definition, nil].flatten[0..1]
+        @geometry, @format, @sub_format = [definition, nil, nil].flatten[0..2]
         @other_args = {}
       end
       @format  = nil if @format.blank?
+      @sub_format  = nil if @sub_format.blank?
     end
 
     # retrieves from the attachment the processors defined in the has_attached_file call
